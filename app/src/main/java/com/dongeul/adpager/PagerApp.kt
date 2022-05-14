@@ -1,6 +1,7 @@
 package com.dongeul.adpager
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class PagerApp : Application() {
-}
+@HiltAndroidApp
+class PagerApp : Application()

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dongeul.adpager.viewmodel.PagerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/ivBookmark"
+            tools:src="@drawable/ic_heart_24_red_1_fill"
+            android:src="@{vm.content.isLiked ? @drawable/ic_heart_24_red_1_fill : @drawable/ic_heart_24_black_o_1}"
+            android:layout_margin="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <Button
+            android:id="@+id/btnHideContent"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookmark"
+            app:layout_constraintTop_toTopOf="@+id/ivBookmark"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookmark"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="이 콘텐츠 숨기기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <include layout="@layout/item_view"
+            app:content="@{vm.content}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
