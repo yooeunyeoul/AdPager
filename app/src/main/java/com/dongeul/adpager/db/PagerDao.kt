@@ -12,7 +12,7 @@ interface PagerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLocalData(contentList: List<Content>)
 
-    @Query("SELECT * FROM Content")
+    @Query("SELECT * FROM Content ORDER BY showingPriority")
     fun getLocalData() : Flow<List<Content>>
 
     @Delete

@@ -19,13 +19,19 @@ class PagerRepository @Inject constructor(
 ) : Repository {
     fun getRemoteData() = flow {
         emit(Result.Loading)
-        var campaigns : List<Content>
+        var campaigns: List<Content>
         coroutineScope {
-            val ad = async { apiService.getAd()}.await()
-            val content = async { apiService.getContent()}.await()
-            ad.campaigns.map { it.contentType = ContentsType.AD }
-            content.campaigns.map { it.contentType = ContentsType.CONTENT }
+            val config = async { apiService.getConfig() }.await()// 광고 3 : 컨텐트 1
+            val ad = async { apiService.getAd() }.await()
+            val content = async { apiService.getContent() }.await()
+            ad.campaigns.sortedByDescending { it.firstDisplayPriority }
+                .map { it.contentType = ContentsType.AD }
+            content.campaigns.sortedByDescending { it.firstDisplayPriority }
+                .map { it.contentType = ContentsType.CONTENT }
             campaigns = ad.campaigns.plus(content.campaigns)
+
+            val shuffledCampaigns = mutableListOf<Content>()
+
 
             pagerDao.insertLocalData(campaigns)
             pagerDao.getLocalData().collect {

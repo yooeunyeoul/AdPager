@@ -22,7 +22,8 @@ Content(
     @field:Json(name = "frequency") var frequency: Int? = null,
     @field:Json(name = "landing_url") var landingUrl: String? = null,
     var contentType: ContentsType? = null,
-    var isLiked: Boolean = false
+    var isLiked: Boolean = false,
+    var showingPriority:Int = 0
 ) : Parcelable
 
 enum class ContentsType {
