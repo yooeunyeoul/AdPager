@@ -37,6 +37,7 @@ class PagerRepository @Inject constructor(
             }
         }
     }.flowOn(Dispatchers.Default)
-    suspend fun getLocalData(contentList: List<Content> ) = pagerDao.insertLocalData(contentList)
+
+    suspend fun updateContent(content: Content) = pagerDao.updateContent(content)
     suspend fun deleteContent(content: Content) = pagerDao.deleteContent(content)
 }

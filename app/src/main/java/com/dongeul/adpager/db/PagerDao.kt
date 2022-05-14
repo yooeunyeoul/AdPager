@@ -19,7 +19,10 @@ interface PagerDao {
     suspend fun deleteContent(content: Content)
 
     @Update
-    fun updateContent(content:Content)
+    suspend fun updateContent(content:Content)
+
+    @Query("SELECT * FROM Content WHERE id = :userId")
+    fun getSingleContent(userId:Int):Flow<Content>
 
 
 

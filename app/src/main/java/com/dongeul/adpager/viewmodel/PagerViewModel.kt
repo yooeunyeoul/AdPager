@@ -7,9 +7,7 @@ import com.dongeul.adpager.model.Content
 import com.dongeul.adpager.model.Result
 import com.dongeul.adpager.repository.PagerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +17,7 @@ class PagerViewModel @Inject constructor(
 ) : ViewModel() {
 
     val content = MutableLiveData<Content>()
+
     fun hideContent() {
         viewModelScope.launch {
             content.value?.let { pagingRepository.deleteContent(content = it) }
@@ -27,12 +26,12 @@ class PagerViewModel @Inject constructor(
 
     fun toggleLike() {
         viewModelScope.launch {
-            if (content.value?.isLiked == true) {
-
-            } else {
-
+            val contentLiveData = content?.value
+            contentLiveData?.isLiked = contentLiveData?.isLiked != true
+            contentLiveData?.let {
+                content.postValue(it)
             }
-
+            content.value?.let { pagingRepository.updateContent(content= it) }
         }
     }
 
@@ -42,6 +41,4 @@ class PagerViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(1000),
             initialValue = Result.Uninitialized
         )
-
-
 }
